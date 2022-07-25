@@ -33,10 +33,12 @@ namespace js4irc
         {
             engine = new V8ScriptEngine();
             _host = host;
+
+            // Exposes $js.execScript and $js.error to AdiIRC
             _host.HookIdentifier("js.execScript", execScript);
             _host.HookIdentifier("js.error", getLastError);
 
-            // Exposes 'adi' object to Javascript
+            // Exposes adi.eval and adi.exec to Javascript
             engine.AddHostObject("adi", new
             {
                 eval = new Func<string, string>((command) => { return this.evaluate(command); }),
