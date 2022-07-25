@@ -54,6 +54,18 @@ namespace js4irc
             }
         }
 
+        // Executes a command in AdiIRC
+        private void adiExecCommand(string command)
+        {
+            _host.ActiveIWindow.ExecuteCommand(command);
+        }
+
+        // Evaluates a string in AdiIRC
+        private string adiEval(string text)
+        {
+            return _host.ActiveIWindow.Evaluate(text, "");
+        }
+
         public void Dispose()
         {
         }
