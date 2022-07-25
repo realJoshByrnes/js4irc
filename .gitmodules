@@ -1,0 +1,3 @@
+[submodule "external/EventTarget"]
+	path = external/EventTarget
+	url = https://github.com/ungap/event-target.git
