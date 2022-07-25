@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace js4irc
         public string PluginName => "js4irc";
         public string PluginDescription => "V8 Javascript engine for AdiIRC";
         public string PluginAuthor => "JD";
-        public string PluginVersion => "0.01";
+        public string PluginVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public string PluginEmail => "";
 
         private V8ScriptEngine engine;
@@ -28,7 +29,6 @@ namespace js4irc
         {
             engine = new V8ScriptEngine();
             _host = host;
-            _host.ActiveIWindow.OutputText("* js4irc loaded");
             _host.HookIdentifier("js.execScript", execute);
             _host.HookIdentifier("js.error", getLastError);
         }

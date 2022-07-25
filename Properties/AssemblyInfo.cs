@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("js4irc")]
-[assembly: AssemblyDescription("V8 Javascript for AdiIRC")]
+[assembly: AssemblyDescription("V8 Javascript engine for AdiIRC")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("realJoshByrnes on GitHub")]
 [assembly: AssemblyProduct("js4irc")]
 [assembly: AssemblyCopyright("Copyright ©  2022 @realJoshByrnes")]
 [assembly: AssemblyTrademark("")]
