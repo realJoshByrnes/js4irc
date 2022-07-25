@@ -25,25 +25,44 @@ namespace js4irc
         private IPluginHost _host;
         private string _error = "";
 
+        /// <summary>
+        /// Called by AdiIRC to initialise plugin
+        /// </summary>
+        /// <param name="host"></param>
         public void Initialize(IPluginHost host)
         {
             engine = new V8ScriptEngine();
             _host = host;
-            _host.HookIdentifier("js.execScript", execute);
+            _host.HookIdentifier("js.execScript", execScript);
             _host.HookIdentifier("js.error", getLastError);
+
+            // Exposes 'adi' object to Javascript
+            engine.AddHostObject("adi", new
+            {
+                eval = new Func<string, string>((command) => { return this.evaluate(command); }),
+                exec = new Action<string>((text) => { this.executeCommand(text); })
+            });
         }
 
+        /// <summary>
+        /// Gets the error (if any) from the last executeScript() call
+        /// </summary>
+        /// <param name="argument"></param>
         private void getLastError(RegisteredIdentifierArgs argument)
         {
             argument.ReturnString = this._error;
         }
 
-        private void execute(RegisteredIdentifierArgs argument)
+        /// <summary>
+        /// Executes a script in the V8 Engine
+        /// </summary>
+        /// <param name="argument"></param>
+        private void execScript(RegisteredIdentifierArgs argument)
         {
-            var input = argument.InputParameters.First();
+            var code = argument.InputParameters.First();
             try
             {
-                var result = engine.Evaluate(input);
+                var result = engine.Evaluate(code);
                 _error = "";
                 argument.ReturnString = $"{result}";
             }
@@ -54,18 +73,28 @@ namespace js4irc
             }
         }
 
-        // Executes a command in AdiIRC
-        private void adiExecCommand(string command)
+        /// <summary>
+        /// Executes a command in AdiIRC
+        /// </summary>
+        /// <param name="command">Command to be executed in AdiIRC</param>
+        private void executeCommand(string command)
         {
             _host.ActiveIWindow.ExecuteCommand(command);
         }
 
-        // Evaluates a string in AdiIRC
-        private string adiEval(string text)
+        /// <summary>
+        /// Evaluates a string in AdiIRC
+        /// </summary>
+        /// <param name="text">Text to be evaluated in AdiIRC</param>
+        /// <returns></returns>
+        private string evaluate(string text)
         {
             return _host.ActiveIWindow.Evaluate(text, "");
         }
 
+        /// <summary>
+        /// Called by AdiIRC on shutdown
+        /// </summary>
         public void Dispose()
         {
         }
