@@ -24,3 +24,10 @@ alias js {
 }
 
 ````
+Now simply typing /js as a command will work similarly to a JS console.
+````mrc
+/js Math.PI
+````
+
+-> Math.PI<br>
+<- 3.14159265358979
