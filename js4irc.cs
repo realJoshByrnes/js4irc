@@ -12,7 +12,7 @@ using Microsoft.ClearScript.V8;
 
 namespace js4irc
 {
-    public class Class1 : IPlugin
+    public class js4irc : IPlugin
     {
         public string PluginName => "js4irc";
         public string PluginDescription => "V8 Javascript engine for AdiIRC";
@@ -28,7 +28,7 @@ namespace js4irc
         {
             engine = new V8ScriptEngine();
             _host = host;
-            _host.ActiveIWindow.OutputText('* js4irc loaded');
+            _host.ActiveIWindow.OutputText("* js4irc loaded");
             _host.HookIdentifier("js.execScript", execute);
             _host.HookIdentifier("js.error", getLastError);
         }
